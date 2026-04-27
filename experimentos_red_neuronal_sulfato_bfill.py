@@ -42,7 +42,7 @@ def preparar_datos(
     for columna in columnas_a_evaluar:
         if columna not in df.columns:
             raise ValueError(f"La columna '{columna}' no existe en la tabla '{tabla}'.")
-        df[columna] = df[columna].interpolate(method="linear")
+        df[columna] = df[columna].bfill()
 
     if columna_objetivo not in df.columns:
         raise ValueError(f"La columna objetivo '{columna_objetivo}' no existe en la tabla '{tabla}'.")
@@ -257,32 +257,32 @@ def entrenar_red_sulfato(
 
 
 if __name__ == "__main__":
-    # columnas = [
-    #     "Turbiedad_cruda",
-    #     "Color_agua_Natural",
-    #     "pH_cruda",
-    #     "Alcalinidad_total_cruda",
-    # ]
-    # resultado = entrenar_red_sulfato(
-    #     columnas_a_evaluar=columnas,
-    #     numero_capas_ocultas=2,
-    #     nombre_experimento="sulfato_base_2_capas",
-    # )
-    # print("Accuracy test:", round(resultado["accuracy_test"], 4))
-    # print("Tiempo entrenamiento (s):", round(resultado["tiempo_entrenamiento_segundos"], 4))
-    # print(
-    #     "Latencia promedio predicción (ms):",
-    #     round(resultado["latencia_prediccion"]["latencia_promedio_prediccion_ms"], 4),
-    # )
-    # print(
-    #     "Exactitud global (%):",
-    #     round(resultado["analisis_eficiencia"]["global"]["aciertos_exactos_porcentaje"], 2),
-    # )
-    # print(
-    #     "Dentro de ±2 categorías (%):",
-    #     round(resultado["analisis_eficiencia"]["global"]["dentro_rango_pm2_porcentaje"], 2),
-    # )
-    # print("Resultados guardados en:", resultado["rutas_salida"]["modelo"])
+    columnas = [
+        "Turbiedad_cruda",
+        "Color_agua_Natural",
+        "pH_cruda",
+        "Alcalinidad_total_cruda",
+    ]
+    resultado = entrenar_red_sulfato(
+        columnas_a_evaluar=columnas,
+        numero_capas_ocultas=2,
+        nombre_experimento="sulfato_base_2_capas_bfill",
+    )
+    print("Accuracy test:", round(resultado["accuracy_test"], 4))
+    print("Tiempo entrenamiento (s):", round(resultado["tiempo_entrenamiento_segundos"], 4))
+    print(
+        "Latencia promedio predicción (ms):",
+        round(resultado["latencia_prediccion"]["latencia_promedio_prediccion_ms"], 4),
+    )
+    print(
+        "Exactitud global (%):",
+        round(resultado["analisis_eficiencia"]["global"]["aciertos_exactos_porcentaje"], 2),
+    )
+    print(
+        "Dentro de ±2 categorías (%):",
+        round(resultado["analisis_eficiencia"]["global"]["dentro_rango_pm2_porcentaje"], 2),
+    )
+    print("Resultados guardados en:", resultado["rutas_salida"]["modelo"])
     
     columnas = [
         "Turbiedad_cruda",
@@ -293,7 +293,7 @@ if __name__ == "__main__":
     resultado = entrenar_red_sulfato(
         columnas_a_evaluar=columnas,
         numero_capas_ocultas=4,
-        nombre_experimento="sulfato_base_4_capas",
+        nombre_experimento="sulfato_base_4_capas_bfill",
     )
     print("Accuracy test:", round(resultado["accuracy_test"], 4))
     print("Tiempo entrenamiento (s):", round(resultado["tiempo_entrenamiento_segundos"], 4))
@@ -311,7 +311,7 @@ if __name__ == "__main__":
     )
     print("Resultados guardados en:", resultado["rutas_salida"]["modelo"])
     
-    olumnas = [
+    columnas = [
         "Turbiedad_cruda",
         "Color_agua_Natural",
         "pH_cruda",
@@ -319,7 +319,7 @@ if __name__ == "__main__":
     resultado = entrenar_red_sulfato(
         columnas_a_evaluar=columnas,
         numero_capas_ocultas=5,
-        nombre_experimento="sulfato_3_datos_5_capas",
+        nombre_experimento="sulfato_3_datos_5_capas_bfill",
     )
     print("Accuracy test:", round(resultado["accuracy_test"], 4))
     print("Tiempo entrenamiento (s):", round(resultado["tiempo_entrenamiento_segundos"], 4))
@@ -336,7 +336,7 @@ if __name__ == "__main__":
         round(resultado["analisis_eficiencia"]["global"]["dentro_rango_pm2_porcentaje"], 2),
     )
     print("Resultados guardados en:", resultado["rutas_salida"]["modelo"])
-    olumnas = [
+    columnas = [
         "Turbiedad_cruda",
         "Color_agua_Natural",
         "pH_cruda",
@@ -345,7 +345,7 @@ if __name__ == "__main__":
     resultado = entrenar_red_sulfato(
         columnas_a_evaluar=columnas,
         numero_capas_ocultas=2,
-        nombre_experimento="sulfato_base_2_capas",
+        nombre_experimento="sulfato_base_2_capas_bfill",
     )
     print("Accuracy test:", round(resultado["accuracy_test"], 4))
     print("Tiempo entrenamiento (s):", round(resultado["tiempo_entrenamiento_segundos"], 4))
