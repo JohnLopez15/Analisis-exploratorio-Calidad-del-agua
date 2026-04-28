@@ -33,6 +33,10 @@ def plot_bandas_por_categoria(ruta_modelo: str | Path = "modelos_sulfato_regresi
     band25_high = []
     band50_low = []  # central 50% -> 25% - 75%
     band50_high = []
+    band75_low = []  # central 75% -> 12.5% - 87.5%
+    band75_high = []
+    extremos_low = []  # min
+    extremos_high = []  # max
 
     for x in xs:
         vals = grupos.get_group(x).values
@@ -41,12 +45,20 @@ def plot_bandas_por_categoria(ruta_modelo: str | Path = "modelos_sulfato_regresi
         band25_high.append(np.percentile(vals, 62.5))
         band50_low.append(np.percentile(vals, 25))
         band50_high.append(np.percentile(vals, 75))
+        band75_low.append(np.percentile(vals, 12.5))
+        band75_high.append(np.percentile(vals, 87.5))
+        extremos_low.append(np.min(vals))
+        extremos_high.append(np.max(vals))
 
     mediana = np.array(mediana)
     band25_low = np.array(band25_low)
     band25_high = np.array(band25_high)
     band50_low = np.array(band50_low)
     band50_high = np.array(band50_high)
+    band75_low = np.array(band75_low)
+    band75_high = np.array(band75_high)
+    extremos_low = np.array(extremos_low)
+    extremos_high = np.array(extremos_high)
 
     plt.figure(figsize=(14, 7))
 
@@ -60,6 +72,14 @@ def plot_bandas_por_categoria(ruta_modelo: str | Path = "modelos_sulfato_regresi
     # Bandas 50% (azul claro)
     plt.plot(xs, band50_low, color="deepskyblue", linestyle="-.", linewidth=1.8, label="50% inferior (25%)")
     plt.plot(xs, band50_high, color="deepskyblue", linestyle="-.", linewidth=1.8, label="50% superior (75%)")
+
+    # Bandas 75% (amarillo) -> percentiles 12.5% / 87.5%
+    plt.plot(xs, band75_low, color="yellow", linestyle=":", linewidth=1.8, label="75% inferior (12.5%)")
+    plt.plot(xs, band75_high, color="yellow", linestyle=":", linewidth=1.8, label="75% superior (87.5%)")
+
+    # Extremos (naranja) -> min y max
+    plt.plot(xs, extremos_low, color="orange", linestyle=(0, (3, 1, 1, 1)), linewidth=1.8, label="Mínimo")
+    plt.plot(xs, extremos_high, color="orangered", linestyle=(0, (3, 1, 1, 1)), linewidth=1.8, label="Máximo")
 
     # Linea 1:1
     plt.plot(xs, xs, color="red", linewidth=2.2, label="1:1 (Perfecto)")
